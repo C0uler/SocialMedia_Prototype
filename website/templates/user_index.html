@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="This is a CV website" />
+	<meta name="rating" content="adult" />
+	<meta name="rating" content="RTA-5042-1996-1400-1577-RTA" />
+
+
+
+	<title>Introduction</title>
+	<link rel="stylesheet" href="{{url_for('static',filename='style1.css')}}">
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="{{ url_for('static',filename = 'script.js')}}"></script>
+
+
+
+	<!-- Favicon logo  -->
+	<link rel="shortcut icon" href="{{ url_for('static',filename='img/favicon.ico') }}" type="image/x-icon">
+</head>
+<body>
+
+	{% with messages = get_flashed_messages(with_categories=true) %}
+
+		{% if messages %}
+			{% for category,message in messages %}
+				{%if category == 'success'%}
+				<div class="alert alert-success alert-dismissible fade show d-flex align-items-center" role='alert'>	
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+					<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+					</svg>	
+					<div>
+					{{message}}
+					</div>
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+
+				{%elif category == 'error'%}
+				<div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role='alert'>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+				    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+				  </svg>
+	 				 <div>
+					{{message}}
+					</div>
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+				{%endif%}
+			{% endfor %}
+		{% endif %}
+
+	{% endwith %}
+
+	<header>
+		<nav>
+			<div class="nav-item logo">
+				
+			{% if custumize.lower() == 'true' and edit.lower() == 'login_update' %}
+					<form id="myform" class="row g-2" action="{{url_for('views.update',edit='login_update')}}" method="post">
+					  <div class="col-auto">
+					    <input class="col-auto" id="login_update" type="text" name="logo_name" placeholder="Enter Username" autofocus>
+					  </div>
+					  <div class="col-auto">
+					    <button class="btn btn-primary col-auto" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Save</button> 
+					    <a class="btn btn-primary col-auto" href="{{ url_for('views.profile',ids='charlos',custumize='true',edit='false')}}">Cancel</a>
+					  </div>
+					</form>									
+			
+			{% elif custumize.lower() == 'true'%}
+				<ul id="edit-logo">
+					<div class="col-auto">
+						<h4 >{{user.data_logo}}</h4>
+					</div>
+					<div class="col-auto">
+						<a class="btn btn-primary" href="{{ url_for('views.profile',ids='charlos',custumize='true',edit='login_update')}}">Edit</a>
+					</div>				
+				</ul>
+
+			{% else %}
+			
+				<h4 >{{user.data_logo}}</h4>
+
+			{% endif %}
+								
+			</div>
+			<ul class="nav-item menu-nav">
+				<li><a href="#top">Home</a></li>
+				<li><a href="#about">About</a></li>
+				<li><a href="#projectss">Project</a></li>
+				<li><a href="#contacts">Contact</a></li>
+				
+        
+
+			{% if custumize.lower() == 'false' %}
+
+				<li><a href="{{url_for('views.profile',ids='charlos',custumize='true',edit='false')}}">Customize</a></li>
+
+			{% elif custumize.lower() == 'true' %}
+
+				<li><a href="{{url_for('views.profile',ids='charlos',custumize='false',edit='false')}}">Cancel</a></li>
+
+			{% endif %}
+			</ul>
+			
+			<a href="{{ url_for('auth.logout') }}" class="nav-item btn-login" >Logout</a>
+
+
+			<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="grey" class="bi bi-file-person" viewBox="0 0 16 16">
+			  <path d="M12 1a1 1 0 0 1 1 1v10.755S12 11 8 11s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z"/>
+			  <path d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+			</svg></button>
+			<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+		      	<div class="offcanvas-header">
+		       		<h5 class="offcanvas-title" id="offcanvasNavbarLabel" style="color: black;">Friend</h5>
+		        	<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+		      	</div>
+		      	<div class="offcanvas-body">
+		      		<form class="d-flex" method="post">
+			          <input class="form-control me-2" type="text" name="Search" id="search_index" placeholder="Search" autofocus oninput="LoadNewSearchColoum()">	
+			          <button class="btn btn-outline-success" type="button" onclick="LoadNewSearchColoum()">Search</button>
+			        </form>
+			        <br>
+			        
+			        	
+			       <div id="user_id_column">
+				  		{% for users in all_user %}
+				  		{% if users.username != user.username%}
+				  		<form class="d-flex">
+				  			<h4 class="form-control me-2">{{users.username}}</h4>
+				  			<a class="btn btn-outline-success" type="submit" href="{{url_for('views.home',ids= users.username)}}">
+				  				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+							  	<path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+							    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+							</svg></a>
+				  		</form>
+				  	 
+				  	
+				  		{%endif%}
+				  		{% endfor %}
+				  	</div>
+					
+		      	</div>
+		      
+	 		</div>
+
+
+
+			
+			
+			<div class="nav-item menu-toggle">
+				<span class="menu-toggle-item"></span>
+				<span class="menu-toggle-item"></span>
+				<span class="menu-toggle-item"></span>
+			</div>
+		</nav>
+	</header>
+
+	<section class="jumbotron text-center" id="home">
+	
+		
+		
+		{% if custumize.lower() == 'true' %}
+
+			<img src="{{ url_for('static',filename = user.image_username)}}"  alt="charlos_makso_aku" width="300" height="300" class="rounded-circle">
+
+
+
+			{% if edit.lower() == 'username_input' %}
+
+				<form id="myform" action="{{url_for('views.update',edit='username_input')}}" method="post" enctype="multipart/form-data">
+					<div class="mb-3">
+	 					 <label for="formFile" class="form-label">Choose your file name</label>
+	  					 <input oninput="file_size(this)" class="form-control" type="file" id="formFile" name="image">
+					</div>
+					<input type="text" name="username" placeholder="Enter Username" required autofocus>	
+					<br>
+					<a class="btn btn-primary" href="{{ url_for('views.profile',ids='charlos',custumize='true',edit='false')}}">Cancel</a>
+					<button class="btn btn-primary col-auto" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Save</button>
+				</form>
+			
+
+			{% else%}
+
+				<h1 class="display-5" id="Name">{{user.data_name}}</h1>
+				<a class="btn btn-primary" href="{{ url_for('views.profile',ids='charlos',custumize='true',edit='username_input')}}">Edit</a>
+
+			
+
+			{% endif %}
+
+		{% else%}
+			<img src="{{ url_for('static',filename = user.image_username )}}" alt="charlos_makso_aku" width="300" height="300" class="rounded-circle">
+			<h1 class="display-5" id="Name">{{user.data_name}}</h1>
+		{% endif %}
+
+
+	
+
+		<p class="lead">Murid | Siswa</p>
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#8CB6F5" fill-opacity="1" d="M0,224L40,234.7C80,245,160,267,240,266.7C320,267,400,245,480,245.3C560,245,640,267,720,229.3C800,192,880,96,960,101.3C1040,107,1120,213,1200,229.3C1280,245,1360,171,1400,133.3L1440,96L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"></path></svg>
+	</section>
+
+	<section id="about">
+		<br>
+		<div class="container abouts" id = 'abouts'>
+			<div class="row text-center mb-4">
+				<div class="col">
+					<h2>About Me</h2>
+				</div>
+			</div>
+			<div class="row justify-content-center fs-5 text-center">
+				
+
+			{% if custumize.lower() == 'true' and edit.lower() == 'about1_edit' %}
+				<div class="col-6" id='about_1'>
+					<p class="" id='about1'>
+						<div class="mb-3">
+							<form id="myform" action="{{url_for('views.update',edit='about1_edit')}}" method="post">
+								<label for="say" class="form-label">Your Say</label>
+								<textarea name='about1' class="form-control" id="say" rows="3"></textarea>
+								<br>
+								<a class="btn btn-primary" href="{{ url_for('views.profile',ids='charlos',custumize='true',edit='false',_anchor='about')}}">Cancel</a>
+								<button class="btn btn-primary col-auto" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Save</button>
+							</form>
+						</div>
+					</p>
+				</div>
+
+				<div class="col-6" id= 'about_2'>
+					<p class="" id='about2'>
+						{{user.data_about2}}
+					</p>
+					<a class="btn btn-primary" href="{{ url_for('views.profile',ids='charlos',custumize='true',edit='about2_edit',_anchor='about')}}">Edit</a>
+				</div>
+
+			{% elif custumize.lower() == 'true' and edit.lower() == 'about2_edit' %}
+				<div class="col-6">
+					<p class="" id='about1'>
+						{{user.data_about1}}
+					</p>
+					<a class="btn btn-primary" href="{{ url_for('views.profile',ids='charlos',custumize='true',edit='about1_edit',_anchor='about')}}">Edit</a>
+				</div>
+
+				<div class="col-6">
+					<p class="" id='about2'>
+						<div class="mb-3">
+							<form id="myform" action="{{url_for('views.update',edit='about2_edit')}}" method="post">
+								<label for="say" class="form-label">Your Say</label>
+								<textarea name='about2' class="form-control" id="say" rows="3"></textarea>
+								<a class="btn btn-primary" href="{{ url_for('views.profile',ids='charlos',custumize='true',edit='false',_anchor='about')}}">Cancel</a>
+								<button class="btn btn-primary col-auto" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Save</button>
+							</form>
+						</div>
+					</p>
+					
+				</div>
+			
+
+			{% elif custumize.lower() == 'true' %}
+			
+				<div class="col-6"  id='about_1'>
+					<p class="" id='about1'>
+						{{user.data_about1}}
+					</p>
+					<a class="btn btn-primary" href="{{ url_for('views.profile',ids='charlos',custumize='true',edit='about1_edit',_anchor='about')}}">Edit</a>
+				</div>
+				<div class="col-6"  id='about_2'>
+					<p class="" id='about2'>
+						{{user.data_about2}}
+					</p>
+					<a class="btn btn-primary" href="{{ url_for('views.profile',ids='charlos',custumize='true',edit='about2_edit',_anchor='about')}}">Edit</a>
+				</div>
+					
+				
+			{% else %}
+				<div class="col-6"  id='about_1'>
+					<p class="" id='about1'>
+						{{user.data_about1}}
+					</p>
+				</div>
+				<div class="col-6"  id='about_2'>
+					<p class="" id='about2'>
+						{{user.data_about2}}
+					</p>
+				</div>
+
+			{% endif %}
+
+				
+				
+			</div>
+		</div>
+	</section>
+	<section id="projects">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#8cb6f5" fill-opacity="1" d="M0,256L6.2,229.3C12.3,203,25,149,37,144C49.2,139,62,181,74,170.7C86.2,160,98,96,111,69.3C123.1,43,135,53,148,85.3C160,117,172,171,185,208C196.9,245,209,267,222,240C233.8,213,246,139,258,128C270.8,117,283,171,295,202.7C307.7,235,320,245,332,213.3C344.6,181,357,107,369,85.3C381.5,64,394,96,406,122.7C418.5,149,431,171,443,186.7C455.4,203,468,213,480,234.7C492.3,256,505,288,517,256C529.2,224,542,128,554,122.7C566.2,117,578,203,591,218.7C603.1,235,615,181,628,176C640,171,652,213,665,197.3C676.9,181,689,107,702,85.3C713.8,64,726,96,738,112C750.8,128,763,128,775,128C787.7,128,800,128,812,117.3C824.6,107,837,85,849,90.7C861.5,96,874,128,886,149.3C898.5,171,911,181,923,165.3C935.4,149,948,107,960,74.7C972.3,43,985,21,997,21.3C1009.2,21,1022,43,1034,74.7C1046.2,107,1058,149,1071,138.7C1083.1,128,1095,64,1108,74.7C1120,85,1132,171,1145,213.3C1156.9,256,1169,256,1182,256C1193.8,256,1206,256,1218,240C1230.8,224,1243,192,1255,181.3C1267.7,171,1280,181,1292,154.7C1304.6,128,1317,64,1329,74.7C1341.5,85,1354,171,1366,208C1378.5,245,1391,235,1403,208C1415.4,181,1428,139,1434,117.3L1440,96L1440,0L1433.8,0C1427.7,0,1415,0,1403,0C1390.8,0,1378,0,1366,0C1353.8,0,1342,0,1329,0C1316.9,0,1305,0,1292,0C1280,0,1268,0,1255,0C1243.1,0,1231,0,1218,0C1206.2,0,1194,0,1182,0C1169.2,0,1157,0,1145,0C1132.3,0,1120,0,1108,0C1095.4,0,1083,0,1071,0C1058.5,0,1046,0,1034,0C1021.5,0,1009,0,997,0C984.6,0,972,0,960,0C947.7,0,935,0,923,0C910.8,0,898,0,886,0C873.8,0,862,0,849,0C836.9,0,825,0,812,0C800,0,788,0,775,0C763.1,0,751,0,738,0C726.2,0,714,0,702,0C689.2,0,677,0,665,0C652.3,0,640,0,628,0C615.4,0,603,0,591,0C578.5,0,566,0,554,0C541.5,0,529,0,517,0C504.6,0,492,0,480,0C467.7,0,455,0,443,0C430.8,0,418,0,406,0C393.8,0,382,0,369,0C356.9,0,345,0,332,0C320,0,308,0,295,0C283.1,0,271,0,258,0C246.2,0,234,0,222,0C209.2,0,197,0,185,0C172.3,0,160,0,148,0C135.4,0,123,0,111,0C98.5,0,86,0,74,0C61.5,0,49,0,37,0C24.6,0,12,0,6,0L0,0Z"></path></svg>
+		<div class="container pt-3" id="projectss">
+			<div class="row text-center mb-3">
+				<section id="projectsss"></section>
+				<div class="col">
+					<h2>My Projects</h2>
+				</div>
+			</div>
+
+
+			{% if edit == 'projects_edit' %}
+
+			<form id="myform" action="{{url_for('views.update',edit='projects_edit')}}" method="post" enctype="multipart/form-data">
+				<div class="mb-3">
+ 					 <label for="formFile" class="form-label">Choose your file name for your project</label>
+  					 <input oninput="file_size(this)" class="form-control" type="file" id="formFile" name="image_project1">
+				</div>
+				<br>
+				<div class="mb-3">
+ 					 <label for="formFile" class="form-label">Choose your file name for your project</label>
+  					 <input oninput="file_size(this)" class="form-control" type="file" id="formFile" name="image_project2">
+				</div>
+				<br>
+				<div class="mb-3">
+ 					 <label for="formFile" class="form-label">Choose your file name for your project</label>
+  					 <input oninput="file_size(this)" class="form-control" type="file" id="formFile" name="image_project3">
+				</div>
+				<br>
+				<div class="mb-3">
+ 					 <label for="formFile" class="form-label">Choose your file name for your project</label>
+  					 <input oninput="file_size(this)" class="form-control" type="file" id="formFile" name="image_project4">
+				</div>
+				<br>
+				<div class="mb-3">
+ 					 <label for="formFile" class="form-label">Choose your file name for your project</label>
+  					 <input oninput="file_size(this)" class="form-control" type="file" id="formFile" name="image_project5">
+				</div>
+				<br>
+				<a class="btn btn-primary" href="{{ url_for('views.profile',ids='charlos',custumize='true',edit='false')}}">Cancel</a>
+				<button class="btn btn-primary col-auto" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Save</button>
+			</form>
+
+			
+			{% else %}
+				<div class="row" justify-content-center>
+				<div class="col-md-4 mb-3">
+					<div class="card">
+						<img src="{{ url_for('static',filename = user.image_project1)}}" class="card-img-top" alt="Certificate Charlos" height="300">
+					</div>
+				</div>
+				<div class="col-md-4 mb-3">
+					<div class="card">
+						<img src="{{ url_for('static',filename = user.image_project2)}}" class="card-img-top" alt="Certificate Jordan" height="300">
+					</div>
+				</div>
+				<div class="col-md-4 mb-3">
+					<div class="card">
+						<img src="{{ url_for('static',filename = user.image_project3)}}" class="card-img-top" alt="Project" height="300">
+					</div>
+				</div>
+				<div class="col-md-6 mb-3">
+					<div class="card">
+						<img src="{{ url_for('static',filename = user.image_project4)}}" class="card-img-top" alt="Project Libary" width="300" height=400>
+					</div>
+				</div>
+				<div class="col-md-6 mb-3">
+					<div class="card">
+						<img src="{{ url_for('static',filename = user.image_project5)}}" class="card-img-top" alt="Project battleship" width="300" height=400>
+					</div>
+					</div>
+				</div>
+			</div>
+			{% if custumize == 'true' %}
+			<div class="text-centers" style="width: 100%; position: absolute; left: 50%;">
+				<a class="btn btn-primary text-centers" href="{{ url_for('views.profile',ids='charlos',custumize='true',edit='projects_edit',_anchor='projectsss')}}">Edit</a>
+			</div>
+			{% endif %}
+			
+		{% endif %}
+	</section>
+	<section id="contact">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#0099ff" fill-opacity="1" d="M0,256L18.5,266.7C36.9,277,74,299,111,298.7C147.7,299,185,277,222,234.7C258.5,192,295,128,332,96C369.2,64,406,64,443,106.7C480,149,517,235,554,261.3C590.8,288,628,256,665,218.7C701.5,181,738,139,775,122.7C812.3,107,849,117,886,106.7C923.1,96,960,64,997,85.3C1033.8,107,1071,181,1108,192C1144.6,203,1182,149,1218,154.7C1255.4,160,1292,224,1329,208C1366.2,192,1403,96,1422,48L1440,0L1440,0L1421.5,0C1403.1,0,1366,0,1329,0C1292.3,0,1255,0,1218,0C1181.5,0,1145,0,1108,0C1070.8,0,1034,0,997,0C960,0,923,0,886,0C849.2,0,812,0,775,0C738.5,0,702,0,665,0C627.7,0,591,0,554,0C516.9,0,480,0,443,0C406.2,0,369,0,332,0C295.4,0,258,0,222,0C184.6,0,148,0,111,0C73.8,0,37,0,18,0L0,0Z"></path></svg>
+		<div class="container pt-3">
+			<div class="row text-center">
+				<div class="col">
+					<h2>Contact Us!</h2>
+				</div>
+			</div>
+			<section id="contacts"></section>
+			<div class="row justify-content-center">
+				<div class="col-md-6">
+					<form id="myform">
+						
+						<div class="mb-3">
+							<label for="Name" class="form-label">Nama</label>
+							<input type="text" class="form-control" id="name" aria-describedby="name">
+						</div>
+						<!-- <div class="mb-3">
+							<label for="email" class="form-label">Email address</label>
+							<input type="email" class="form-control" id="email" aria-describedby="email">
+						</div> -->
+						<div class="mb-3">
+							<label for="say" class="form-label">Your Say</label>
+							<textarea class="form-control" id="say" rows="3"></textarea>
+						</div>
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<footer class="bg-primary text-white">
+		<div>Created by <a href="{{url_for('views.home',ids = 'charlos')}}">Charlos Ferdinand</a> & <a href="{{url_for('views.home',ids='jordan')}}">Jordan Arya Yohamsa</a></div>
+	</footer>
+
+
+
+
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        Are You Sure You Want To Change This
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	        <button form = "myform" type="submit" class="btn btn-primary">Save changes</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+
+	
+</div>
+
+
+	
+</body>
+</html>
