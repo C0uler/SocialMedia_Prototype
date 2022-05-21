@@ -63,7 +63,7 @@
 			{% if custumize.lower() == 'true' and edit.lower() == 'login_update' %}
 					<form id="myform" class="row g-2" action="{{url_for('views.update',edit='login_update')}}" method="post">
 					  <div class="col-auto">
-					    <input class="col-auto" id="login_update" type="text" name="logo_name" placeholder="Enter Username" autofocus>
+					    <input class="col-auto" id="login_update" type="text" name="logo_name" placeholder="Enter Username" autofocus autocomplete="off">
 					  </div>
 					  <div class="col-auto">
 					    <button class="btn btn-primary col-auto" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Save</button> 
@@ -121,7 +121,7 @@
 		      	</div>
 		      	<div class="offcanvas-body">
 		      		<form class="d-flex" method="post">
-			          <input class="form-control me-2" type="text" name="Search" id="search_index" placeholder="Search" autofocus oninput="LoadNewSearchColoum()">	
+			          <input class="form-control me-2" type="text" name="Search" id="search_index" placeholder="Search" autofocus oninput="LoadNewSearchColoum()" autocomplete="off">	
 			          <button class="btn btn-outline-success" type="button" onclick="LoadNewSearchColoum()">Search</button>
 			        </form>
 			        <br>
@@ -177,7 +177,7 @@
 	 					 <label for="formFile" class="form-label">Choose your file name</label>
 	  					 <input oninput="file_size(this)" class="form-control" type="file" id="formFile" name="image">
 					</div>
-					<input type="text" name="username" placeholder="Enter Username" required autofocus>	
+					<input type="text" name="username" placeholder="Enter Username" autofocus autocomplete="off">	
 					<br>
 					<a class="btn btn-primary" href="{{ url_for('views.profile',ids='charlos',custumize='true',edit='false')}}">Cancel</a>
 					<button class="btn btn-primary col-auto" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Save</button>
