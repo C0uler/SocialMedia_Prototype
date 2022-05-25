@@ -22,7 +22,6 @@ def login():
 		username = form.username.data
 		password = form.password.data
 		email = form.username.data
-		print(username)
 		user_by_Username = User.query.filter_by(username=username).first()
 		user_by_email = User.query.filter_by(email_address=email).first()
 
@@ -51,23 +50,26 @@ def SignUp():
 		password = form.password.data
 		email = form.email.data
 		user = User.query.filter_by(username=username).first()
-		if username != "null" or username != None:
+		if username.lower() != 'jordan' and username.lower() != 'charlos':
+			if username != "null" or username != None:
 
-		
-			if user is None:
-				user = User.query.filter_by(email_address=email).first()
-				if user is None:	
-					new_user = User(username = username,password=generate_password_hash(password,method='sha256'),email_address=email)
-					db.session.add(new_user)
-					db.session.commit()
-					login_user(new_user,duration = timedelta(seconds=1))
-					return redirect(url_for('views.profile'))
+			
+				if user is None:
+					user = User.query.filter_by(email_address=email).first()
+					if user is None:	
+						new_user = User(username = username,password=generate_password_hash(password,method='sha256'),email_address=email)
+						db.session.add(new_user)
+						db.session.commit()
+						login_user(new_user,duration = timedelta(seconds=1))
+						return redirect(url_for('views.profile'))
+					else:
+						flash('email address already exist',category='error')
 				else:
-					flash('email address already exist',category='error')
+					flash('username already exist',category='error')
 			else:
-				flash('username already exist',category='error')
+				flash('congratulation you find the bug',category='error')
 		else:
-			flash('congratulation you find the bug',category='error')
+			flash('dont use this name',category='error')
 
 
 				

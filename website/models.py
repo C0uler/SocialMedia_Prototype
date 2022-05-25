@@ -16,3 +16,4 @@ class User(db.Model, UserMixin):
 	image_project3 = db.Column(db.String(2000),default="img/foto4.png")
 	image_project4 = db.Column(db.String(2000),default="img/foto5.png")
 	image_project5 = db.Column(db.String(2000),default="img/foto6.png")
+	

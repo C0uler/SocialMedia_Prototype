@@ -14,7 +14,8 @@ DB_NAME = "database.db"
 def create_app():
 	app.config['SECRET_KEY'] = 'CHARLOSYANGBUAT'
 	app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
-	app.config['IMAGE_UPLOAD'] = "D:/Belajar/Belajar/Kelas 11/Semester 2/Tugas/website/static/img/user_upload" #Ubah dewek file path nyo
+	app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+	app.config['IMAGE_UPLOAD'] = "static/img/user_upload" #Ubah dewek file path nyo
 	
 	app.config['ALLOWED_IMAGE_EXTENSIONS'] = ['PNG','JPG','JPEG']
 	app.config['MAX_IMAGE_FILESIZE'] = 0.5*1024*1024
@@ -35,6 +36,7 @@ def create_app():
 
 	login_manager = LoginManager()
 	login_manager.login_view = "auth.login"
+	login_manager.login_message_category = 'info'
 	app.permanent_session_lifetime = timedelta(hours=2)
 	login_manager.init_app(app)
 
