@@ -85,7 +85,7 @@ def compactpicture(picture,picture_path,size):
 		output_size = (600,500)
 
 	image = Image.open(picture)
-	image.thumbnail(output_size)
+	image.thumbnail(output_size, Image.ANTIALIAS)
 	image.save(picture_path)
 
 def remove_old_one(file_path):

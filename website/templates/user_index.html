@@ -129,7 +129,9 @@
 			        	
 			       <div id="user_id_column">
 				  		{% for users in all_user %}
+				  		{% for step in range(40) %}
 				  		{% if users.username != user.username%}
+
 				  		<form class="d-flex">
 				  			<h4 class="form-control me-2">{{users.username}}</h4>
 				  			<a class="btn btn-outline-success" type="submit" href="{{url_for('views.home',ids= users.username)}}">
@@ -141,6 +143,7 @@
 				  	 
 				  	
 				  		{%endif%}
+				  		{% endfor %}
 				  		{% endfor %}
 				  	</div>
 					
@@ -433,6 +436,8 @@
 	    </div>
 	  </div>
 	</div>
+
+	
 
 
 	
